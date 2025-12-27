@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGCSE Chemistry 0620 - Topic 9: Metals Masterclass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #475569;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --success-color: #16a34a;
+            --warning-color: #ca8a04;
+            --danger-color: #dc2626;
+            --tip-bg: #eff6ff;
+            --tip-border: #bfdbfe;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #94a3b8;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --success-color: #22c55e;
+            --warning-color: #eab308;
+            --danger-color: #ef4444;
+            --tip-bg: #1e3a8a;
+            --tip-border: #1d4ed8;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            padding-bottom: 120px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        h1 { margin: 0; font-size: 1.5rem; color: var(--primary-color); }
+        .subtitle { font-size: 0.9rem; color: var(--text-muted); }
+        .top-toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+        
+        .btn { border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-secondary { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--secondary-color); }
+        .btn-danger { background: var(--danger-color); color: white; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .progress-container { width: 100%; height: 8px; background-color: #cbd5e1; border-radius: 4px; margin-bottom: 25px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: var(--success-color); width: 0%; transition: width 0.4s ease; }
+
+        .filter-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; }
+        .filter-chip { background: var(--card-bg); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; border: 1px solid var(--secondary-color); white-space: nowrap; }
+        .filter-chip.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+        .q-card { background: var(--card-bg); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); border-left: 5px solid transparent; page-break-inside: avoid; }
+        .q-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+        .syllabus-tag { font-family: monospace; background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; }
+        [data-theme="dark"] .syllabus-tag { background: rgba(255,255,255,0.1); }
+        .question-text { font-size: 1.1rem; font-weight: 500; margin-bottom: 20px; line-height: 1.6; }
+
+        .answer-container { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--secondary-color); animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .answer-text { color: var(--success-color); font-weight: 500; line-height: 1.6; }
+        .examiner-tip { margin-top: 15px; background: var(--tip-bg); border-left: 4px solid var(--tip-border); padding: 12px; border-radius: 4px; font-size: 0.9rem; color: var(--text-main); }
+
+        /* Diagram Styling */
+        .diagram-container { display: none; margin: 20px 0; justify-content: center; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        [data-theme="dark"] .diagram-container { background: #334155; border-color: #475569; }
+        svg { max-width: 100%; height: auto; display: block; }
+        
+        /* SVG Text Fixes */
+        text { font-family: sans-serif; font-size: 12px; fill: #333; }
+        [data-theme="dark"] text { fill: #f1f5f9; }
+        [data-theme="dark"] path, [data-theme="dark"] rect, [data-theme="dark"] circle { stroke: #cbd5e1; }
+
+        .card-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px; }
+        .traffic-lights { display: flex; gap: 8px; }
+        .tl-btn { width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; opacity: 0.3; transition: transform 0.2s, opacity 0.2s; }
+        .tl-btn:hover { transform: scale(1.1); opacity: 0.6; }
+        .tl-btn.selected { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        .tl-red { background: var(--danger-color); }
+        .tl-amber { background: var(--warning-color); }
+        .tl-green { background: var(--success-color); }
+        .score-select { padding: 6px; border-radius: 6px; border: 1px solid var(--secondary-color); background: var(--bg-color); color: var(--text-main); }
+
+        .dashboard-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--card-bg); padding: 10px 25px; border-radius: 50px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; gap: 20px; z-index: 1000; border: 1px solid var(--secondary-color); width: max-content; }
+        .rank-badge { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; padding: 4px 10px; border-radius: 12px; }
+        .rank-iron { background: #71717a; color: white; }
+        .rank-copper { background: #b45309; color: white; }
+        .rank-gold { background: #eab308; color: black; }
+        .score-display { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.2rem; }
+        .timer-display { font-family: monospace; font-size: 1.1rem; color: var(--text-muted); }
+
+        @media (max-width: 600px) {
+            .app-header { flex-direction: column; align-items: flex-start; }
+            .dashboard-footer { width: 90%; padding: 10px; justify-content: space-around; bottom: 10px; }
+            .rank-badge { display: none; }
+        }
+        @media print {
+            .dashboard-footer, .top-toolbar, .filter-bar, .card-controls, .btn-reveal { display: none !important; }
+            .answer-container, .diagram-container { display: block !important; }
+            .examiner-tip { display: block !important; }
+            .q-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="app-header">
+        <div>
+            <h1>Chemistry 0620 <span style="font-weight:300">| Topic 9</span></h1>
+            <div class="subtitle">Metals Revision Masterclass</div>
+        </div>
+        <div class="top-toolbar">
+            <button class="btn btn-secondary" onclick="toggleTheme()"><i class="fas fa-moon"></i> Theme</button>
+            <button class="btn btn-secondary" onclick="shuffleQuiz()"><i class="fas fa-random"></i> Shuffle</button>
+            <button class="btn btn-secondary" onclick="toggleTimer()" id="timer-btn"><i class="fas fa-stopwatch"></i> Start Timer</button>
+            <button class="btn btn-danger" onclick="resetQuiz()"><i class="fas fa-trash-alt"></i> Reset</button>
+            <button class="btn btn-primary" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+        </div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="filter-bar" id="filter-container"></div>
+    <div id="quiz-content"></div>
+</div>
+
+<div class="dashboard-footer">
+    <div class="timer-display" id="timer-display">00:00</div>
+    <div style="width: 1px; height: 20px; background: #cbd5e1;"></div>
+    <div class="score-display">
+        <span id="score-fraction">0/0</span>
+    </div>
+    <div style="width: 1px; height: 20px; background: #cbd5e1;"></div>
+    <div id="rank-badge" class="rank-badge rank-iron">IRON RANK</div>
+</div>
+
+<script>
+    // --- SVGs Definitions ---
+    const svgs = {
+        alloy: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <text x="80" y="30" text-anchor="middle" font-weight="bold">Pure Metal</text>
+                <g transform="translate(30, 50)">
+                    <circle cx="20" cy="20" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="55" cy="20" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="90" cy="20" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="20" cy="55" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="55" cy="55" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="90" cy="55" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <text x="55" y="110" text-anchor="middle" font-size="10">Layers slide easily</text>
+                </g>
+            </g>
+            <line x1="200" y1="20" x2="200" y2="180" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5,5"/>
+            <g>
+                <text x="300" y="30" text-anchor="middle" font-weight="bold">Alloy</text>
+                <g transform="translate(240, 50)">
+                    <circle cx="20" cy="20" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="55" cy="20" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="90" cy="20" r="8" fill="#ca8a04" stroke="#854d0e" stroke-width="2"/> <circle cx="20" cy="55" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="55" cy="55" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                    <circle cx="95" cy="50" r="15" fill="#94a3b8" stroke="#334155" stroke-width="2"/> <text x="60" y="110" text-anchor="middle" font-size="10">Structure distorted</text>
+                </g>
+            </g>
+        </svg>`,
+        
+        blastFurnace: `<svg viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 80 50 L 60 250 L 80 300 L 220 300 L 240 250 L 220 50 Z" fill="none" stroke="#475569" stroke-width="3"/>
+            
+            <text x="150" y="20" text-anchor="middle" font-weight="bold">Charge (Ore, Coke, Limestone)</text>
+            <line x1="150" y1="25" x2="150" y2="45" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+            
+            <text x="10" y="270" font-size="10">Hot Air</text>
+            <line x1="50" y1="270" x2="70" y2="270" stroke="#dc2626" stroke-width="2"/>
+            <text x="250" y="270" font-size="10">Hot Air</text>
+            <line x1="250" y1="270" x2="230" y2="270" stroke="#dc2626" stroke-width="2"/>
+
+            <line x1="240" y1="260" x2="280" y2="260" stroke="#854d0e" stroke-width="2"/>
+            <text x="285" y="265" font-size="10">Slag</text>
+            
+            <line x1="220" y1="290" x2="280" y2="290" stroke="#333" stroke-width="2"/>
+            <text x="285" y="295" font-size="10" font-weight="bold">Molten Iron</text>
+
+            <text x="150" y="100" text-anchor="middle" fill="#dc2626" font-size="10" opacity="0.6">Reduction Zone (CO)</text>
+            <text x="150" y="200" text-anchor="middle" fill="#dc2626" font-size="10" opacity="0.6">Combustion Zone (C+O2)</text>
+        </svg>`,
+
+        electrolysis: `<svg viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+            <rect x="50" y="50" width="200" height="150" fill="none" stroke="#333" stroke-width="3"/>
+            <text x="150" y="220" text-anchor="middle" font-size="10">Steel Case (Cathode -)</text>
+            
+            <rect x="52" y="80" width="196" height="118" fill="#bfdbfe" opacity="0.5"/>
+            <text x="260" y="100" font-size="10" fill="#2563eb">Molten Cryolite + Al2O3</text>
+            <line x1="255" y1="100" x2="200" y2="100" stroke="#2563eb" stroke-width="1"/>
+
+            <rect x="52" y="180" width="196" height="18" fill="#94a3b8"/>
+            <text x="260" y="190" font-size="10">Molten Aluminium</text>
+            <line x1="255" y1="190" x2="200" y2="190" stroke="#333" stroke-width="1"/>
+
+            <rect x="80" y="20" width="30" height="80" fill="#333"/>
+            <rect x="135" y="20" width="30" height="80" fill="#333"/>
+            <rect x="190" y="20" width="30" height="80" fill="#333"/>
+            <text x="150" y="15" text-anchor="middle" font-weight="bold">Carbon Anodes (+)</text>
+        </svg>`
+    };
+
+    const rawQuizData = [
+        { id: 1, syllabus: "9.1(a)", topic: "Properties", bloom: "Remembering", q: "State the difference between metals and non-metals in terms of electrical conductivity.", a: "Metals are good conductors of electricity, whereas non-metals are poor conductors (insulators), with the exception of graphite.", tip: "Don't forget to mention the exception (Graphite) for full marks." },
+        { id: 2, syllabus: "9.1(b)", topic: "Properties", bloom: "Applying", q: "A substance 'X' has a high melting point, conducts electricity when solid, and can be hammered into different shapes. Classify 'X' and justify.", a: "'X' is a metal. Justification: It conducts electricity and is malleable.", tip: "Keywords: 'Malleable' (hammered into shape) and 'Conductor'." },
+        { id: 3, syllabus: "9.1(a)", topic: "Properties", bloom: "Evaluating", q: "Evaluate why metal cookware needs insulating handles despite metals being good for cooking.", a: "High thermal conductivity cooks food well but high electrical/thermal conductivity poses safety risks (burns/shocks).", tip: "Link the property directly to the hazard." },
+        { id: 4, syllabus: "9.2", topic: "Uses", bloom: "Remembering", q: "State the physical property of aluminium suitable for aircraft bodies.", a: "Low density.", tip: "Do not just say 'lightweight', say 'Low Density'." },
+        { id: 5, syllabus: "9.2", topic: "Uses", bloom: "Applying", q: "Why use aluminium for overhead cables despite copper being a better conductor?", a: "Aluminium has much lower density (prevents sagging) and is cheaper. Steel core adds strength.", tip: "Mention both density and the steel core." },
+        { id: 6, syllabus: "9.3", topic: "Alloys", bloom: "Understanding", q: "Explain in terms of structure why an alloy is harder than a pure metal.", a: "Different sized atoms disrupt the regular layers, preventing them from sliding over each other.", tip: "Draw a rough sketch of disrupted layers to help visualize.", diagramSVG: svgs.alloy },
+        { id: 7, syllabus: "9.3", topic: "Alloys", bloom: "Remembering", q: "Define 'alloy' and name constituents of brass.", a: "Mixture of a metal with other elements. Brass = Copper + Zinc.", tip: "Alloy is a MIXTURE, not a compound." },
+        { id: 8, syllabus: "9.4", topic: "Reactivity", bloom: "Applying", q: "Predict observation: Zinc added to Copper(II) sulfate.", a: "Blue solution fades, reddish-brown solid forms (displacement).", tip: "Mention BOTH the color change of solution and the solid formed." },
+        { id: 9, syllabus: "9.4", topic: "Reactivity", bloom: "Remembering", q: "Order decreasing reactivity: Iron, Potassium, Copper, Magnesium, Zinc.", a: "Potassium > Magnesium > Zinc > Iron > Copper.", tip: "Mnemonic: Please Send Cats Monkeys Zebras..." },
+        { id: 10, syllabus: "9.5", topic: "Rusting", bloom: "Applying", q: "Explain 'Sacrificial Protection' using Magnesium on steel pipes.", a: "Magnesium is more reactive than iron. It oxidizes (loses electrons) instead of iron, donating electrons to the steel.", tip: "Use the term 'more reactive' and 'loses electrons'." },
+        { id: 11, syllabus: "9.5", topic: "Extraction", bloom: "Understanding", q: "Which gas is the reducing agent in the Blast Furnace?", a: "Carbon Monoxide (CO).", tip: "Carbon reacts to form CO, which then reduces the iron ore.", diagramSVG: svgs.blastFurnace },
+        { id: 12, syllabus: "9.5", topic: "Extraction", bloom: "Applying", q: "Explain the role of Limestone in the Blast Furnace.", a: "Removes acidic impurities (silica). Decomposes to CaO, reacts with silica to form Slag.", tip: "Equation: CaO + SiO2 -> CaSiO3." },
+        { id: 13, syllabus: "9.6", topic: "Aluminium", bloom: "Remembering", q: "Function of Cryolite in electrolysis?", a: "Lowers melting point of electrolyte (saves energy) and improves conductivity.", tip: "Crucial point: 'Saves Energy/Cost'." },
+        { id: 14, syllabus: "9.6", topic: "Aluminium", bloom: "Understanding", q: "Why replace carbon anodes regularly?", a: "Oxygen produced reacts with hot carbon to form CO2, burning them away.", tip: "C + O2 -> CO2.", diagramSVG: svgs.electrolysis }
+    ];
+
+    let state = {
+        scores: {}, status: {}, revealed: {},
+        timerActive: false, timeSeconds: 0, timerInterval: null,
+        currentFilter: 'All', order: rawQuizData.map(d => d.id)
+    };
+
+    const maxScore = 5;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadState(); renderFilters(); renderQuiz(); updateDashboard();
+        if(localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
+    });
+
+    function renderFilters() {
+        const topics = ['All', ...new Set(rawQuizData.map(q => q.topic))];
+        document.getElementById('filter-container').innerHTML = topics.map(t => 
+            `<div class="filter-chip ${state.currentFilter === t ? 'active' : ''}" onclick="setFilter('${t}')">${t}</div>`
+        ).join('');
+    }
+
+    function setFilter(topic) {
+        state.currentFilter = topic;
+        renderFilters();
+        renderQuiz();
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = '';
+        let questionsToShow = rawQuizData.filter(q => state.currentFilter === 'All' || q.topic === state.currentFilter);
+        questionsToShow.sort((a, b) => state.order.indexOf(a.id) - state.order.indexOf(b.id));
+
+        questionsToShow.forEach(q => {
+            const currentScore = state.scores[q.id] || 0;
+            const currentStatus = state.status[q.id] || '';
+            const isRevealed = state.revealed[q.id] || false;
+
+            const card = document.createElement('div');
+            card.className = 'q-card';
+            card.innerHTML = `
+                <div class="q-meta">
+                    <div><span class="syllabus-tag">${q.syllabus}</span> <strong style="color:var(--primary-color)">${q.topic}</strong> <span> • ${q.bloom}</span></div>
+                </div>
+                <div class="question-text"><strong>Q:</strong> ${q.q}</div>
+                
+                ${q.diagramSVG ? `
+                    <div style="margin-bottom:15px">
+                        <button class="btn btn-secondary" onclick="toggleDiagram(this)">${isRevealed ? 'Hide Diagram' : 'Show Diagram'}</button>
+                        <div class="diagram-container" style="display:${isRevealed ? 'flex' : 'none'}">${q.diagramSVG}</div>
+                    </div>` : ''}
+
+                <div class="card-controls">
+                    <button class="btn btn-secondary btn-reveal" onclick="toggleAnswer(${q.id})">${isRevealed ? 'Hide Answer' : 'Reveal Answer'}</button>
+                    <div class="traffic-lights">
+                        <button class="tl-btn tl-red ${currentStatus==='red'?'selected':''}" onclick="setTrafficLight(${q.id}, 'red')"></button>
+                        <button class="tl-btn tl-amber ${currentStatus==='amber'?'selected':''}" onclick="setTrafficLight(${q.id}, 'amber')"></button>
+                        <button class="tl-btn tl-green ${currentStatus==='green'?'selected':''}" onclick="setTrafficLight(${q.id}, 'green')"></button>
+                    </div>
+                    <select class="score-select" onchange="setScore(${q.id}, this.value)">
+                        ${[0,1,2,3,4,5].map(v => `<option value="${v}" ${currentScore==v?'selected':''}>${v} pts</option>`).join('')}
+                    </select>
+                </div>
+                <div class="answer-container" id="ans-${q.id}" style="display: ${isRevealed ? 'block' : 'none'}">
+                    <div class="answer-text"><strong>A:</strong> ${q.a}</div>
+                    <div class="examiner-tip"><i class="fas fa-lightbulb" style="color:var(--warning-color)"></i> <strong>Examiner's Tip:</strong> ${q.tip}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function toggleAnswer(id) {
+        state.revealed[id] = !state.revealed[id];
+        renderQuiz(); updateProgress(); saveState();
+    }
+
+    function toggleDiagram(btn) {
+        const box = btn.nextElementSibling;
+        if (box.style.display === 'none') {
+            box.style.display = 'flex';
+            btn.innerText = 'Hide Diagram';
+        } else {
+            box.style.display = 'none';
+            btn.innerText = 'Show Diagram';
+        }
+    }
+
+    function setTrafficLight(id, status) {
+        state.status[id] = status;
+        if(status === 'red') state.scores[id] = 1;
+        if(status === 'amber') state.scores[id] = 3;
+        if(status === 'green') state.scores[id] = 5;
+        renderQuiz(); updateDashboard(); saveState();
+    }
+
+    function setScore(id, value) {
+        state.scores[id] = parseInt(value);
+        updateDashboard(); saveState();
+    }
+
+    function shuffleQuiz() {
+        for (let i = state.order.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [state.order[i], state.order[j]] = [state.order[j], state.order[i]];
+        }
+        renderQuiz(); saveState();
+    }
+
+    function resetQuiz() {
+        if(confirm("Are you sure you want to reset all progress?")) {
+            localStorage.removeItem('chemQuizState');
+            location.reload();
+        }
+    }
+
+    function updateDashboard() {
+        const maxPossible = rawQuizData.length * maxScore;
+        const currentTotal = Object.values(state.scores).reduce((a, b) => a + b, 0);
+        document.getElementById('score-fraction').innerText = `${currentTotal} / ${maxPossible}`;
+        
+        const percentage = (currentTotal / maxPossible) * 100;
+        const rankEl = document.getElementById('rank-badge');
+        rankEl.className = 'rank-badge';
+        if(percentage < 50) { rankEl.classList.add('rank-iron'); rankEl.innerText = 'IRON RANK'; }
+        else if (percentage < 80) { rankEl.classList.add('rank-copper'); rankEl.innerText = 'COPPER RANK'; }
+        else { rankEl.classList.add('rank-gold'); rankEl.innerText = 'GOLD RANK'; }
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const interactedCount = rawQuizData.filter(q => state.revealed[q.id] || state.scores[q.id] > 0).length;
+        document.getElementById('progress-bar').style.width = (interactedCount / rawQuizData.length * 100) + '%';
+    }
+
+    function toggleTimer() {
+        state.timerActive = !state.timerActive;
+        const btn = document.getElementById('timer-btn');
+        if(state.timerActive) {
+            btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+            btn.classList.add('btn-danger'); btn.classList.remove('btn-secondary');
+            state.timerInterval = setInterval(() => {
+                state.timeSeconds++;
+                const mins = Math.floor(state.timeSeconds / 60).toString().padStart(2, '0');
+                const secs = (state.timeSeconds % 60).toString().padStart(2, '0');
+                document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+            }, 1000);
+        } else {
+            clearInterval(state.timerInterval);
+            btn.innerHTML = '<i class="fas fa-stopwatch"></i> Resume';
+            btn.classList.add('btn-secondary'); btn.classList.remove('btn-danger');
+            saveState();
+        }
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        isDark ? body.removeAttribute('data-theme') : body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+
+    function saveState() {
+        const saveObj = { ...state, timerInterval: null };
+        localStorage.setItem('chemQuizState', JSON.stringify(saveObj));
+    }
+
+    function loadState() {
+        const saved = localStorage.getItem('chemQuizState');
+        if(saved) {
+            const parsed = JSON.parse(saved);
+            state = { ...state, ...parsed };
+            const mins = Math.floor(state.timeSeconds / 60).toString().padStart(2, '0');
+            const secs = (state.timeSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+        }
+    }
+
+    function downloadPDF() {
+        const element = document.querySelector('.container');
+        const toolbar = document.querySelector('.top-toolbar');
+        const footer = document.querySelector('.dashboard-footer');
+        
+        toolbar.style.display = 'none';
+        footer.style.display = 'none';
+        
+        // Force Expand for PDF
+        const originalRevealed = {...state.revealed};
+        rawQuizData.forEach(q => state.revealed[q.id] = true);
+        renderQuiz();
+
+        const opt = { margin: 10, filename: 'IGCSE_Chemistry_Revision.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            toolbar.style.display = 'flex';
+            footer.style.display = 'flex';
+            state.revealed = originalRevealed;
+            renderQuiz();
+        });
+    }
+</script>
+</body>
+</html>
